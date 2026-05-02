@@ -37,7 +37,7 @@ app.post("/upload", upload.single("image"), async (req, res) => {
       return res.status(400).json({ error: "No file uploaded" });
     }
 
-    // 🔥 Resize image before upload
+    // Resize image before upload
     const resizedBuffer = await sharp(req.file.buffer)
       .resize(300, 300)   // you can change size
       .toBuffer();
@@ -54,7 +54,7 @@ app.post("/upload", upload.single("image"), async (req, res) => {
     // upload to S3
     await s3.upload(params).promise();
 
-    // 🔥 Generate signed URL (valid for 1 minute)
+    // Generate signed URL (valid for 1 minute)
     const signedUrl = s3.getSignedUrl("getObject", {
       Bucket: "image-upload-akash863",
       Key: key,
